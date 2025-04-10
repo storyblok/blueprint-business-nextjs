@@ -17,7 +17,7 @@ storyblokInit({
   use: [apiPlugin],
   components,
   apiOptions: {
-    region: 'eu'
+    endpoint: process.env.STORYBLOK_API_BASE_URL ? `${new URL('process.env.STORYBLOK_API_BASE_URL').origin}/v2` : undefined,
   }
 });
 
