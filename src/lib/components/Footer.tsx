@@ -1,8 +1,14 @@
 import * as React from "react";
 
-function FooterView(props: any) {
+export type FooterViewProps = {
+  className?: string;
+};
+
+function FooterView(props: FooterViewProps) {
   return (
-    <div className="self-stretch px-20 pt-20 pb-10 bg-stone-900 inline-flex flex-col justify-center items-center gap-12 overflow-hidden">
+    <div
+      className={`self-stretch px-20 pt-20 pb-10 bg-stone-900 inline-flex flex-col justify-center items-center gap-12 overflow-hidden ${props.className}`}
+    >
       <div className="self-stretch inline-flex justify-start items-center gap-2.5">
         <div className="w-[577px] flex justify-start items-center gap-1 flex-wrap content-center">
           <div className="flex-1 justify-start text-white text-5xl font-extrabold font-['Inter'] leading-[62px]">
@@ -13,9 +19,9 @@ function FooterView(props: any) {
       <div className="self-stretch inline-flex justify-between items-start">
         <div className="w-[453.38px] inline-flex flex-col justify-start items-start gap-10">
           <div className="self-stretch justify-start text-white text-base font-normal font-['Inter'] leading-relaxed">
-            80,000 + developers & marketers use Storyblok's CMS to deliver
+            80,000 + developers & marketers use Storyblok&apos;s CMS to deliver
             powerful content experiences on any frontend: Websites, eCommerce,
-            mobile apps, AR/VR or voice content{" "}
+            mobile apps, AR/VR or voice content
           </div>
           <div className="w-5 h-4 relative overflow-hidden">
             <div className="w-1 h-3 left-[0.26px] top-[5.65px] absolute bg-white" />
@@ -32,72 +38,56 @@ function FooterView(props: any) {
         <div className="flex justify-start items-start gap-28">
           <div className="inline-flex flex-col justify-start items-start gap-3.5">
             <div className="justify-start text-white text-xl font-semibold font-['Inter'] leading-7">
-              {" "}
-              Learn more{" "}
+              Learn more
             </div>
             <div className="self-stretch justify-start text-green-300 text-base font-medium font-['Inter'] leading-snug">
-              {" "}
-              Home{" "}
+              Home
             </div>
             <div className="self-stretch justify-start text-white/70 text-base font-medium font-['Inter'] leading-snug">
-              {" "}
-              Services{" "}
+              Services
             </div>
             <div className="self-stretch justify-start text-white/70 text-base font-medium font-['Inter'] leading-snug">
-              {" "}
-              About{" "}
+              About
             </div>
             <div className="self-stretch justify-start text-white/70 text-base font-medium font-['Inter'] leading-snug">
-              {" "}
-              Blog{" "}
+              Blog
             </div>
             <div className="self-stretch justify-start text-white/70 text-base font-medium font-['Inter'] leading-snug">
-              {" "}
-              Get in touch{" "}
+              Get in touch
             </div>
           </div>
           <div className="inline-flex flex-col justify-start items-start gap-3.5">
             <div className="justify-start text-white text-xl font-semibold font-['Inter'] leading-7">
-              {" "}
-              Service{" "}
+              Service
             </div>
             <div className="self-stretch justify-start text-white/70 text-base font-medium font-['Inter'] leading-snug">
-              {" "}
-              Brand{" "}
+              Brand
             </div>
             <div className="self-stretch justify-start text-white/70 text-base font-medium font-['Inter'] leading-snug">
-              {" "}
-              Strategy{" "}
+              Strategy
             </div>
             <div className="self-stretch justify-start text-white/70 text-base font-medium font-['Inter'] leading-snug">
-              {" "}
-              Website{" "}
+              Website
             </div>
             <div className="justify-start text-white/70 text-base font-medium font-['Inter'] leading-snug">
-              {" "}
-              Marketing{" "}
+              Marketing
             </div>
             <div className="justify-start text-white/70 text-base font-medium font-['Inter'] leading-snug">
-              {" "}
-              Design{" "}
+              Design
             </div>
           </div>
           <div className="w-44 inline-flex flex-col justify-start items-start gap-3.5">
             <div className="justify-start text-white text-xl font-semibold font-['Inter'] leading-7">
-              {" "}
-              Resources{" "}
+              Resources
             </div>
             <div className="self-stretch justify-start text-white/70 text-base font-medium font-['Inter'] leading-snug">
-              {" "}
-              Enterprise{" "}
+              Enterprise
             </div>
             <div className="self-stretch justify-start text-white/70 text-base font-medium font-['Inter'] leading-snug">
-              {" "}
-              Case Studies{" "}
+              Case Studies
             </div>
             <div className="self-stretch justify-start text-white/70 text-base font-medium font-['Inter'] leading-snug">
-              {" "}
-              Legal{" "}
+              Legal
             </div>
           </div>
         </div>
@@ -105,4 +95,5 @@ function FooterView(props: any) {
     </div>
   );
 }
+
 export default FooterView;

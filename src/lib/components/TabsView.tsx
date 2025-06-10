@@ -28,7 +28,7 @@ function TabsView(props: TabsViewProps) {
             <button
               key={tab._uid}
               {...editableAttributes(tab)}
-              onClick={(event) => setCurrentTabUid(tab._uid)}
+              onClick={(_event) => setCurrentTabUid(tab._uid)}
               className={`flex-1 py-4 ${
                 currentTabUid === tab._uid
                   ? "bg-stone-800 text-white"

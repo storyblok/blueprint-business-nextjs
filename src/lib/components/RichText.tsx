@@ -91,7 +91,7 @@ export function convertAttributesInElement(
 
 const options: StoryblokRichTextOptions<React.ReactElement> = {
   renderFn: React.createElement,
-  textFn: (text: string, attrs?: Record<string, any>) =>
+  textFn: (text: string, attrs?: Record<string, unknown>) =>
     React.createElement(React.Fragment, attrs, text),
   keyedResolvers: true,
 }

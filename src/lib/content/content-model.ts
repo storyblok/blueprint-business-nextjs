@@ -43,9 +43,6 @@ export type HeroContent = BlockContent<{
   description: RichTextContent;
   backgroundColor: 'beige' | 'white' | 'grey';
 }>;
-export type StatsContent = BlockContent<{
-  component: 'stats';
-}>;
 export type TabsContent = BlockContent<{
   component: 'tabs';
   description: RichTextContent;
@@ -56,4 +53,4 @@ export type TabContent = BlockContent<{
   title: TextContent;
   content: Content[];
 }>;
-export type Content = UnknownContent | PageContent | TestimonialContent | TestimonialsContent | CardsContent | HeroContent | StatsContent | TabsContent | TabContent
+export type Content = UnknownContent | PageContent | TestimonialContent | TestimonialsContent | CardsContent | HeroContent | TabsContent | TabContent

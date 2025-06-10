@@ -16,8 +16,6 @@ export { default as CardsView } from './Cards';
 export * from './Cards';
 export { default as CardView } from './Card';
 export * from './Card';
-export { default as StatsView } from './Stats';
-export * from './Stats';
 export { default as TabsView } from './TabsView';
 export * from './TabsView';
 export { default as RichTextView } from './RichText';

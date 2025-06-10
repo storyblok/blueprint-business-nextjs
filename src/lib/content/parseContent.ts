@@ -1,5 +1,5 @@
 import { object, array, equals, oneOf, type Parser, withDefault, parseString, optional, parseNumber, map } from 'pure-parse';
-import type { CardsContent, Content, HeroContent, PageContent, StatsContent, TestimonialContent, TestimonialsContent, UnknownContent, TabsContent, TabContent, CardContent } from '.';
+import type { CardsContent, Content, HeroContent, PageContent, TestimonialContent, TestimonialsContent, UnknownContent, TabsContent, TabContent, CardContent } from '.';
 import { type AssetContent, type RichTextContent, type BlockContent } from '../delivery-api';
 import { parseRichTextContent } from './parseRichText';
 const parseAssetContent = object<AssetContent>({
@@ -74,11 +74,6 @@ export const parseHeroContent = object<HeroContent>({
   } as RichTextContent),
   backgroundColor: withDefault(oneOf(equals('white'), equals('grey'), equals('beige')), 'white')
 });
-export const parseStatsContent = object<StatsContent>({
-  component: equals('stats'),
-  _uid: parseString,
-  _editable: optional(parseString)
-});
 export const parseTabContent = object<TabContent>({
   component: equals('tab'),
   _uid: parseString,
@@ -103,5 +98,5 @@ export const parseTabsContent = object<TabsContent>({
 export function parseContent(data: unknown): ReturnType<Parser<Content>> {
   // This needs to be a function expression to avoid the following error:
   // TS2448: Block-scoped variable parseContent used before its declaration.
-  return oneOf(parsePageContent, parseTestimonialsContent, parseTestimonialContent, parseCardsContent, parseHeroContent, parseStatsContent, parseTabsContent)(data);
+  return oneOf(parsePageContent, parseTestimonialsContent, parseTestimonialContent, parseCardsContent, parseHeroContent, parseTabsContent)(data);
 }

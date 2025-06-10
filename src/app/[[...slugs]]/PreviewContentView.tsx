@@ -9,7 +9,7 @@ function importUmd<T>(src: string, name: string): Promise<T> {
   script.async = true
   return new Promise<T>((resolve, reject) => {
     script.onload = () => {
-      // @ts-expect-error
+      // @ts-expect-error -- TypeScript does not know about the global variable
       resolve(window[name])
     }
 
@@ -17,7 +17,7 @@ function importUmd<T>(src: string, name: string): Promise<T> {
     document.head.appendChild(script)
   }).then((module) => {
     document.head.removeChild(script)
-    // @ts-expect-error
+    // @ts-expect-error -- TypeScript does not know about the global variable
     delete window[name]
     return module
   })

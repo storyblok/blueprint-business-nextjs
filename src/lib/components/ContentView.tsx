@@ -10,7 +10,6 @@ export type ContentViewProps = {
   TestimonialsView,
   PageView,
   HeroView,
-  StatsView,
   TabsView,
   CardsView,
 } from ".";
@@ -19,7 +18,6 @@ import type {
   Content,
   HeroContent,
   PageContent,
-  StatsContent,
   TestimonialContent,
   TestimonialsContent,
   TabsContent,
@@ -41,9 +39,6 @@ function ContentView(props: ContentViewProps) {
       ) : null}{" "}
       {props.content.component === "hero" ? (
         <HeroView content={props.content as HeroContent} />
-      ) : null}{" "}
-      {props.content.component === "stats" ? (
-        <StatsView content={props.content as StatsContent} />
       ) : null}{" "}
       {props.content.component === "tabs" ? (
         <TabsView content={props.content as TabsContent} />

@@ -1,11 +1,15 @@
 import * as React from "react";
 
-function AppBarView(props: any) {
+export type AppbarProps = {
+  className?: string;
+};
+
+function AppBarView(props: AppbarProps) {
   return (
     <>
-      <div className="div-38aceef4">
-        <div className="div-38aceef4-2">
-          <div className="div-38aceef4-3" />
+      <div className={props.className + " div-0d9606d4"}>
+        <div className="div-0d9606d4-2">
+          <div className="div-0d9606d4-3" />
           <svg
             width="29"
             height="28"
@@ -23,36 +27,36 @@ function AppBarView(props: any) {
               fill="#1F1F1F"
             />
           </svg>
-          <div className="div-38aceef4-4">BrightStart</div>
+          <div className="div-0d9606d4-4">BrightStart</div>
         </div>
-        <div className="div-38aceef4-5">
-          <div className="div-38aceef4-6">
-            <a className="a-38aceef4">Home</a>
-            <a className="a-38aceef4">Services</a>
-            <a className="a-38aceef4">About</a>
-            <a className="a-38aceef4">Blog</a>
+        <div className="div-0d9606d4-5">
+          <div className="div-0d9606d4-6">
+            <a className="a-0d9606d4">Home</a>
+            <a className="a-0d9606d4">Services</a>
+            <a className="a-0d9606d4">About</a>
+            <a className="a-0d9606d4">Blog</a>
           </div>
-          <button className="button-38aceef4">Get in touch</button>
+          <button className="button-0d9606d4">Get in touch</button>
         </div>
       </div>
 
-      <style>{`.div-38aceef4 {
+      <style>{`.div-0d9606d4 {
   display: flex;
   padding: 32px 80px;
   justify-content: space-between;
   align-items: center;
   align-self: stretch;
   border-bottom: 1px solid var(--icon-darkness, #000);
-}.div-38aceef4-2 {
+}.div-0d9606d4-2 {
   justify-content: flex-start;
   align-items: center;
   gap: 6px;
   display: flex;
-}.div-38aceef4-3 {
+}.div-0d9606d4-3 {
   display: flex;
   align-items: center;
   gap: 6px;
-}.div-38aceef4-4 {
+}.div-0d9606d4-4 {
   color: #1F1F1F;
   font-family: Inter;
   font-size: 21px;
@@ -60,15 +64,15 @@ function AppBarView(props: any) {
   font-weight: 700;
   line-height: 28px;
   letter-spacing: -0.42px;
-}.div-38aceef4-5 {
+}.div-0d9606d4-5 {
   display: flex;
   align-items: center;
   gap: 24px;
-}.div-38aceef4-6 {
+}.div-0d9606d4-6 {
   display: flex;
   align-items: center;
   gap: var(--spacing-xl, 16px);
-}.a-38aceef4 {
+}.a-0d9606d4 {
   color: #1F1F1F;
   font-family: Inter;
   font-size: var(--body-sm, 14px);
@@ -76,7 +80,7 @@ function AppBarView(props: any) {
   font-weight: 600;
   line-height: 140%;
   letter-spacing: var(--letter_spacing-normal, 0px);
-}.button-38aceef4 {
+}.button-0d9606d4 {
   display: flex;
   padding: var(--spacing-base, 8px) var(--spacing-xl, 16px);
   flex-direction: column;
