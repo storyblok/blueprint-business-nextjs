@@ -15,7 +15,8 @@
     "next": "15.2.4",
     "pure-parse": "1.0.0-rc.0",
     "@storyblok/richtext": "^3.2.0",
-    "@storyblok/preview-bridge": "^2.1.2"
+    "@storyblok/preview-bridge": "^2.1.2",
+    "@netlify/plugin-nextjs": "*"
   },
   "devDependencies": {
     "typescript": "^5",

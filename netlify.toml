@@ -2,6 +2,8 @@
   framework = "next"
   publish = ".next"
   command = "npm run build"
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 [template.environment]
   STORYBLOK_DELIVERY_API_TOKEN = "Change me to your space's Delivery API token"
   STORYBLOK_API_BASE_URL= "https://api.storyblok.com"
