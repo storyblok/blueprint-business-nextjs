@@ -1,6 +1,0 @@
-[build]
-  publish = ".next"
-  command = "npm run build"
-[template.environment]
-  STORYBLOK_DELIVERY_API_TOKEN = "change me to your space's Delivery API token"
-  STORYBLOK_API_BASE_URL= "https://api.storyblok.com"
