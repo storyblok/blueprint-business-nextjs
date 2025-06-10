@@ -1,22 +1,46 @@
 'use client'
 import { FunctionComponent, ReactNode, useEffect, useState } from 'react'
-import StoryblokBridge from '@storyblok/bridge'
 import { parseStory, Story, StoryContentView } from './Story'
+import type StoryblokBridge from '@storyblok/preview-bridge'
+
+function importUmd<T>(src: string, name: string): Promise<T> {
+  const script = document.createElement('script')
+  script.src = src
+  script.async = true
+  return new Promise<T>((resolve, reject) => {
+    script.onload = () => {
+      // @ts-expect-error
+      resolve(window[name])
+    }
+
+    script.onerror = reject
+    document.head.appendChild(script)
+  }).then((module) => {
+    document.head.removeChild(script)
+    // @ts-expect-error
+    delete window[name]
+    return module
+  })
+}
 
 const useStoryblokBridge = () => {
   const [story, setStory] = useState<Story>()
 
   useEffect(() => {
-    const bridge = new StoryblokBridge()
-    bridge.on('input', (payload) => {
-      const res = parseStory(payload.story)
-      setStory(res.tag === 'success' ? res.value : undefined)
+    // Dynamically import the Storyblok Bridge, but use the types from the package.
+    importUmd<typeof StoryblokBridge>(
+      'https://app.storyblok.com/f/storyblok-v2-latest.js',
+      'StoryblokBridge',
+    ).then((StoryblokBridge) => {
+      const bridge = new StoryblokBridge()
+      bridge.on('input', (payload) => {
+        const res = parseStory(payload.story)
+        setStory(res.tag === 'success' ? res.value : undefined)
+      })
     })
-    // TODO request content via the bridge on initial load:
-    //  currently, if the user makes a change before the embedded app is loaded,
-    //  the app will display the draft content instead of the in-memory content
+
     return () => {
-      // The bridge does not support the cleanup of side effects.
+      // The bridge does not support cleanup of side effects.
     }
   }, [])
 

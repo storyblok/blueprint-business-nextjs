@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: `frame-ancestors 'self' https://app.storyblok.com`,
+            value: `frame-ancestors 'self' https://app.storyblok.com https://app-staging-v2.storyblok.com`,
           },
         ],
       },

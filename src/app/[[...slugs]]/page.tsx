@@ -1,7 +1,7 @@
 import { PreviewContentView } from './PreviewContentView'
 import { object, parseString, withDefault } from 'pure-parse'
-import { PreviewSearchParams } from '@storyblok/bridge'
 import { parseStory, Story, StoryContentView } from './Story'
+import { PreviewSearchParams } from '@storyblok/preview-bridge'
 
 type StoryResponse = {
   story: Story
@@ -10,11 +10,6 @@ type StoryResponse = {
 const parseStoryResponse = object<StoryResponse>({
   story: parseStory,
 })
-
-type DynamicPageProps = {
-  params: Promise<{ slugs?: string[] }>
-  searchParams: Promise<unknown>
-}
 
 const parsePreviewSearchParams = withDefault(
   object<PreviewSearchParams>({
@@ -33,21 +28,23 @@ const parsePreviewSearchParams = withDefault(
 
 const fetchStory = async (
   slugs: string[],
-  previewSearchParams: PreviewSearchParams | undefined,
+  isPreview: PreviewSearchParams | undefined,
 ): Promise<Story> => {
+  const baseUrl = process.env.STORYBLOK_API_BASE_URL
   const deliveryApiToken = process.env.STORYBLOK_DELIVERY_API_TOKEN
 
-  if (!deliveryApiToken) {
-    // TODO confirm that this gets included in the error response. If not, we can provide a better error message
-    // Do not reveal the reason
-    throw new Error('The backend is misconfigured')
+  if (!deliveryApiToken || !baseUrl) {
+    throw new Error(
+      'Failed to fetch story: the backend is not configured with the required environment variables',
+    )
   }
 
   const query = new URLSearchParams({
     token: deliveryApiToken,
-    version: previewSearchParams ? 'draft' : 'published',
+    version: isPreview ? 'draft' : 'published',
   }).toString()
-  const url = `https://api.storyblok.com/v2/cdn/stories/${slugs.join('/')}?${query}`
+  const url = `${baseUrl}/v2/cdn/stories/${slugs.join('/')}?${query}`
+
   const response = await fetch(url, {
     method: 'GET',
     headers: {
@@ -62,15 +59,27 @@ const fetchStory = async (
   return jsonResult.value.story
 }
 
-export default async function Home(props: DynamicPageProps) {
-  const slugs = (await props.params).slugs ?? []
+type DynamicPageProps = {
+  params: Promise<{ slugs?: string[] }>
+  searchParams: Promise<unknown>
+}
+
+export default async function DynamicPage(props: DynamicPageProps) {
+  const slugsParam = (await props.params).slugs ?? []
 
   const previewSearchParams = parsePreviewSearchParams(
     await props.searchParams,
   ).value
 
+  // When the page is previewed in Storyblok, Storyblok passes the entire slug of
+  //  the story which for pages includes `pages` from the "pages" folder.
+  //  But in production, we need to prepend `pages` to the slug given in the URL.
+  const slugs = previewSearchParams ? slugsParam : ['pages', ...slugsParam]
+
   const story = await fetchStory(slugs, previewSearchParams)
 
+  // To perform server-side logic in any of your content components,
+  //  please delete the following if-statement to disable the live preview.
   if (previewSearchParams) {
     // If preview params are provided, enable the bridge
     return <PreviewContentView draft={<StoryContentView story={story} />} />
