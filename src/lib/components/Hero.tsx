@@ -4,13 +4,9 @@ export type HeroViewProps = {
   content: HeroContent;
 };
 import type { HeroContent } from "../content";
-import { RichTextView } from ".";
+import RichTextView from "./RichText";
 import { editableAttributes } from "@storyblok/preview-bridge";
-const colorMapping: Record<HeroContent["backgroundColor"], string> = {
-  beige: "bg-beige",
-  white: "bg-white",
-  grey: "bg-grey",
-};
+import { backgroundColor } from "./backgroundColorClass";
 const rootAlignment = (content: HeroContent): string => {
   if (!content.image) {
     return "flex flex-col md:flex-col";
@@ -41,30 +37,39 @@ function Hero(props: HeroViewProps) {
   return (
     <div
       {...editableAttributes(props.content)}
-      className={`w-full ${colorMapping[props.content.backgroundColor]} ${
-        props.content.imagePadding ? "p-10" : "p-0"
-      } self-stretch items-stretch ${rootAlignment(
-        props.content
-      )} flex-wrap justify-between items-center`}
+      className={`self-stretch ${backgroundColor(
+        props.content.backgroundColor
+      )} flex justify-center`}
     >
       <div
-        className={`flex-1 p-20 inline-flex flex-col justify-start gap-6 ${textAlignment(
-          props.content
-        )}`}
+        className={`w-full ${
+          props.content.imagePadding ? "p-4 md:p-10" : "p-0"
+        } ${rootAlignment(props.content)} flex-wrap justify-between max-w-7xl`}
       >
-        <RichTextView doc={props.content.description} />
+        <div
+          className={`
+          flex-1 p-6 md:p-12 lg:px-20 lg:py-25 inline-flex flex-col justify-center gap-4 md:gap-6
+          ${textAlignment(props.content)}
+        `}
+        >
+          <RichTextView doc={props.content.description} />
+        </div>
+        {props.content.image ? (
+          <div
+            className={`relative flex-1 overflow-hidden md:min-h-[650px] ${
+              props.content.imagePadding
+                ? "rounded-xl max-h-[60vw] min-h-[40vw] md:max-h-[800px]"
+                : "rounded-none max-h-[100%] min-h-[40vw] md:min-h-[100%]"
+            } `}
+          >
+            <img
+              src={props.content.image?.filename}
+              alt={props.content.image?.alt}
+              className={`absolute h-full w-full object-cover`}
+            />
+          </div>
+        ) : null}
       </div>
-      {props.content.image ? (
-        <img
-          src={props.content.image?.filename}
-          alt={props.content.image?.alt}
-          className={`min-w-[50%] overflow-hidden flex-1 ${
-            props.content.imagePadding
-              ? "rounded-xl max-h-[800px] min-h-[600px]"
-              : "rounded-none max-h-[100%] min-h-[100%]"
-          } object-cover`}
-        />
-      ) : null}
     </div>
   );
 }

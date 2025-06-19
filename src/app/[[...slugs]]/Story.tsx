@@ -1,13 +1,6 @@
-import { object, parseUnknown } from 'pure-parse'
 import { FunctionComponent } from 'react'
-import { ContentView, parseContent } from '@/lib'
-
-export type Story = {
-  content: unknown
-}
-export const parseStory = object<Story>({
-  content: parseUnknown,
-})
+import { ContentView, parseContent, Story } from '@/lib'
+import { formatResult } from 'pure-parse'
 
 /**
  * Render the content in a story.
@@ -20,8 +13,10 @@ export const StoryContentView: FunctionComponent<{
   const { story } = props
   const contentRes = parseContent(story.content)
 
-  if (contentRes.tag === 'failure') {
-    return <div>The content could not be parsed</div>
+  if (contentRes.error) {
+    return (
+      <div>The content could not be parsed: {formatResult(contentRes)}</div>
+    )
   }
 
   return <ContentView content={contentRes.value} />

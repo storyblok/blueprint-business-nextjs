@@ -1,7 +1,10 @@
 'use client'
 import { FunctionComponent, ReactNode, useEffect, useState } from 'react'
-import { parseStory, Story, StoryContentView } from './Story'
+import { StoryContentView } from './Story'
 import type StoryblokBridge from '@storyblok/preview-bridge'
+import { parseStory, Story } from '@/lib'
+import { resolveStories } from '@/lib/content/resolveRelations'
+import { formatResult } from 'pure-parse'
 
 function importUmd<T>(src: string, name: string): Promise<T> {
   const script = document.createElement('script')
@@ -34,8 +37,11 @@ const useStoryblokBridge = () => {
     ).then((StoryblokBridge) => {
       const bridge = new StoryblokBridge()
       bridge.on('input', (payload) => {
-        const res = parseStory(payload.story)
-        setStory(res.tag === 'success' ? res.value : undefined)
+        const result = parseStory(payload.story)
+        console.error(
+          `Failed to parse response from the bridge: ${formatResult(result)}`,
+        )
+        setStory(result.error ? undefined : result.value)
       })
     })
 
@@ -55,16 +61,17 @@ const useStoryblokBridge = () => {
  */
 export const PreviewContentView: FunctionComponent<{
   draft: ReactNode
+  rels: Story[]
 }> = (props) => {
-  const { draft } = props
+  const { draft, rels } = props
   const story = useStoryblokBridge()
 
   if (!story) {
     // Fall back to the server content when the page is being previewed without being embedded
     //  within an iframe in the visual editor.
-    //  Also briefly visible in the Visual Edotor before the bridge has connected.
+    //  Also briefly visible in the Visual Editor before the bridge has connected.
     return draft
   }
 
-  return <StoryContentView story={story} />
+  return <StoryContentView story={resolveStories(story, rels)} />
 }

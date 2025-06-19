@@ -11,4 +11,5 @@ export * from './options';
 export * from './richText';
 export * from './table';
 export * from './text';
-export * from './textArea'
+export * from './textArea';
+export * from './Story'

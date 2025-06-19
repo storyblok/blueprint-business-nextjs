@@ -103,6 +103,12 @@ type RichTextProps = {
 }
 
 export default function RichText(props: RichTextProps) {
-  // @ts-expect-error -- renderRichText expects `type` to be an enum and not a string literal, but it works at runtime.
-  return convertAttributesInElement(renderRichText(props.doc))
+  return (
+    <div className="rich-text  flex flex-col justify-start items-start gap-2">
+      {convertAttributesInElement(
+        // @ts-expect-error -- renderRichText expects `type` to be an enum and not a string literal, but it works at runtime.
+        renderRichText(props.doc),
+      )}
+    </div>
+  )
 }

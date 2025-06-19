@@ -12,18 +12,16 @@ function CardView(props: CardViewProps) {
   return (
     <div
       {...editableAttributes(props.content)}
-      className={`flex flex-col justify-start items-start gap-4 bg-white rounded-[20px] p-6 ${props.className}`}
+      className={`flex flex-col justify-start items-start gap-4 bg-white rounded-[20px] p-4 sm:p-6 ${props.className}`}
     >
       {props.content.icon ? (
         <img
-          className="p-2 w-[50px] h-[50px]"
+          className="p-2 w-10 h-10 sm:w-[50px] sm:h-[50px]"
           src={props.content.icon?.filename}
           alt={props.content.icon?.alt}
         />
       ) : null}
-      <div className="self-stretch flex flex-col justify-start items-start gap-2">
-        <RichTextView doc={props.content.description} />
-      </div>
+      <RichTextView doc={props.content.description} />
     </div>
   );
 }
