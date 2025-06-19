@@ -6,6 +6,10 @@ export { default as ContentView } from './ContentView';
 export * from './ContentView';
 export { default as PageView } from './PageView';
 export * from './PageView';
+export { default as NotFoundPage } from './NotFoundPage';
+export * from './NotFoundPage';
+export { default as ErrorPage } from './ErrorPage';
+export * from './ErrorPage';
 export { default as TestimonialsView } from './TestimonialsView';
 export * from './TestimonialsView';
 export { default as TestimonialView } from './TestimonialView';
@@ -19,4 +23,6 @@ export * from './Card';
 export { default as TabsView } from './TabsView';
 export * from './TabsView';
 export { default as RichTextView } from './RichText';
-export * from './RichText'
+export * from './RichText';
+export { default as TeamMembersView } from './TeamMembers';
+export * from './TeamMembers'

@@ -5,15 +5,7 @@ export type ContentViewProps = {
 };
 
 /*
- * NOTE: when expressing conditionals with JSX or directives, TypeScript cannot infer the types. This is why we assert the type, even though it's technically incorrect. * Signal-based frameworks like Solid.js and Mitosis are simply incompatible with TypeScript in conditionals. */ import {
-  TestimonialView,
-  TestimonialsView,
-  PageView,
-  HeroView,
-  TabsView,
-  CardsView,
-} from ".";
-import type {
+ * NOTE: when expressing conditionals with JSX or directives, TypeScript cannot infer the types. This is why we assert the type, even though it's technically incorrect. * Signal-based frameworks like Solid.js and Mitosis are simply incompatible with TypeScript in conditionals. */ import type {
   CardsContent,
   Content,
   HeroContent,
@@ -21,7 +13,15 @@ import type {
   TestimonialContent,
   TestimonialsContent,
   TabsContent,
+  TeamMembersContent,
 } from "../content";
+import TeamMembersView from "./TeamMembers";
+import PageView from "./PageView";
+import TestimonialsView from "./TestimonialsView";
+import TestimonialView from "./TestimonialView";
+import CardsView from "./Cards";
+import HeroView from "./Hero";
+import TabsView from "./TabsView";
 function ContentView(props: ContentViewProps) {
   return (
     <>
@@ -42,6 +42,9 @@ function ContentView(props: ContentViewProps) {
       ) : null}{" "}
       {props.content.component === "tabs" ? (
         <TabsView content={props.content as TabsContent} />
+      ) : null}{" "}
+      {props.content.component === "teamMembers" ? (
+        <TeamMembersView content={props.content as TeamMembersContent} />
       ) : null}
     </>
   );

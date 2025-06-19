@@ -9,57 +9,24 @@ import { editableAttributes } from "@storyblok/preview-bridge";
 
 function TestimonialsView(props: TestimonialsViewProps) {
   return (
-    <>
-      <div className="div-febcf57c" {...editableAttributes(props.content)}>
-        <div className="div-febcf57c-2">
-          <h2 className="h2-febcf57c">{props.content.title}</h2>
-          <p className="p-febcf57c">{props.content.description}</p>
-        </div>
-        <div className="div-febcf57c-3">
-          {props.content.testimonials?.map((testimonial, index) => (
-            <ContentView content={testimonial} key={index} />
-          ))}
-        </div>
+    <div
+      className="flex flex-col items-center self-stretch gap-[60px] px-5 pt-[60px] pb-[100px] bg-neutral-100 sm:gap-[60px] sm:px-20 sm:pt-[60px] sm:pb-[100px]"
+      {...editableAttributes(props.content)}
+    >
+      <div className="flex flex-col gap-2 sm:gap-4">
+        <h2 className="flex-1 text-center text-3xl leading-[38px] tracking-[-0.3px] font-extrabold text-[#1F1F1F] font-inter       sm:text-[60px] sm:leading-[72px] sm:tracking-[-0.6px]">
+          {props.content.title}
+        </h2>
+        <p className="self-stretch text-center text-base leading-6 text-[#44474A] font-inter font-normal       sm:text-[18px] sm:leading-[28px]">
+          {props.content.description}
+        </p>
       </div>
-
-      <style>{`.div-febcf57c {
-  display: flex;
-  padding: 60px 80px 100px 80px;
-  flex-direction: column;
-  align-items: center;
-  gap: 60px;
-  align-self: stretch;
-  background: var(--background-primary, #FFF);
-}.div-febcf57c-2 {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}.h2-febcf57c {
-  flex: 1 0 0;
-  color: var(--primary, #1F1F1F);
-  text-align: center;
-  font-family: Inter;
-  font-size: var(--Typography-font-size-font-size-6xl, 60px);
-  font-style: normal;
-  font-weight: 800;
-  line-height: var(--Typography-font-line-height-line-height-6xl, 72px) /* 120% */;
-  letter-spacing: -0.6px;
-}.p-febcf57c {
-  align-self: stretch;
-  color: var(--text, #44474A);
-  text-align: center;
-  font-family: Inter;
-  font-size: var(--body-lg, 18px);
-  font-style: normal;
-  font-weight: 400;
-  line-height: var(--line-height-lg, 28px) /* 155.556% */;
-}.div-febcf57c-3 {
-  display: flex;
-  align-items: stretch;
-  gap: var(--spacing-2xl, 24px);
-  align-self: center;
-}`}</style>
-    </>
+      <div className="self-stretch flex justify-start items-stretch gap-4 md:gap-6 flex-col md:flex-row">
+        {props.content.testimonials?.map((testimonial, index) => (
+          <ContentView content={testimonial} key={index} />
+        ))}
+      </div>
+    </div>
   );
 }
 

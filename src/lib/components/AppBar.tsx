@@ -1,105 +1,96 @@
+"use client";
 import * as React from "react";
+import { useState, useEffect } from "react";
 
 export type AppbarProps = {
   className?: string;
 };
+import BrandIcon from "./BrandIcon";
+import HamburgerIcon from "./HamburgerIcon";
+const tabs = [
+  {
+    label: "Home",
+    href: "/",
+  },
+  {
+    label: "Services",
+    href: "/services",
+  },
+  {
+    label: "About",
+    href: "/about",
+  },
+];
 
 function AppBarView(props: AppbarProps) {
+  const [path, setPath] = useState<string | undefined>(() => undefined);
+
+  const [menuOpen, setMenuOpen] = useState<boolean>(() => false);
+
+  useEffect(() => {
+    setPath(window.location.pathname);
+  }, []);
+
   return (
-    <>
-      <div className={props.className + " div-0d9606d4"}>
-        <div className="div-0d9606d4-2">
-          <div className="div-0d9606d4-3" />
-          <svg
-            width="29"
-            height="28"
-            viewBox="0 0 29 28"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect
-              x="22.7754"
-              y="-0.858398"
-              width="23.8097"
-              height="23.8097"
-              rx="3.73071"
-              transform="rotate(73.0511 22.7754 -0.858398)"
-              fill="#1F1F1F"
-            />
-          </svg>
-          <div className="div-0d9606d4-4">BrightStart</div>
-        </div>
-        <div className="div-0d9606d4-5">
-          <div className="div-0d9606d4-6">
-            <a className="a-0d9606d4">Home</a>
-            <a className="a-0d9606d4">Services</a>
-            <a className="a-0d9606d4">About</a>
-            <a className="a-0d9606d4">Blog</a>
+    <div
+      className={`flex flex-col sm:flex-row items-stretch self-stretch px-4 sm:px-8 md:px-20 py-4 sm:py-0 h-auto  sm:h-25 border-b border-stone-900 justify-between overflow-hidden ${props.className}`}
+    >
+      <div className="flex justify-between items-center py-3 sm:py-0">
+        <div className="flex items-center gap-1 sm:gap-1.5">
+          <BrandIcon />
+          <div className="text-stone-900 text-lg sm:text-xl font-bold font-['Inter'] leading-6 sm:leading-7">
+            BrightStart
           </div>
-          <button className="button-0d9606d4">Get in touch</button>
+        </div>
+        <div className="sm:hidden flex items-center gap-2">
+          <a className="self-center px-4 py-2 bg-black rounded-lg inline-flex flex-col items-end gap-2.5 overflow-hidden text-right justify-center text-white text-sm font-semibold font-['Inter'] leading-tight">
+            Get in touch
+          </a>
+          <button
+            aria-label="Open menu"
+            onClick={(_event) => setMenuOpen(!menuOpen)}
+          >
+            <HamburgerIcon />
+          </button>
         </div>
       </div>
-
-      <style>{`.div-0d9606d4 {
-  display: flex;
-  padding: 32px 80px;
-  justify-content: space-between;
-  align-items: center;
-  align-self: stretch;
-  border-bottom: 1px solid var(--icon-darkness, #000);
-}.div-0d9606d4-2 {
-  justify-content: flex-start;
-  align-items: center;
-  gap: 6px;
-  display: flex;
-}.div-0d9606d4-3 {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}.div-0d9606d4-4 {
-  color: #1F1F1F;
-  font-family: Inter;
-  font-size: 21px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 28px;
-  letter-spacing: -0.42px;
-}.div-0d9606d4-5 {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}.div-0d9606d4-6 {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xl, 16px);
-}.a-0d9606d4 {
-  color: #1F1F1F;
-  font-family: Inter;
-  font-size: var(--body-sm, 14px);
-  font-style: normal;
-  font-weight: 600;
-  line-height: 140%;
-  letter-spacing: var(--letter_spacing-normal, 0px);
-}.button-0d9606d4 {
-  display: flex;
-  padding: var(--spacing-base, 8px) var(--spacing-xl, 16px);
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
-  border-radius: var(--unit-base, 8px);
-  opacity: var(--level-none, 1);
-  background: #80EFAC;
-  align-self: stretch;
-  color: #1F1F1F;
-  text-align: right;
-  font-family: Inter;
-  font-size: var(--size-base, 14px);
-  font-style: normal;
-  font-weight: 600;
-  line-height: 140% /* 19.6px */;
-  letter-spacing: var(--letter_spacing-normal, 0px);
-}`}</style>
-    </>
+      <div className="hidden sm:flex flex-row items-stretch justify-start gap-6">
+        <div className="flex flex-row items-stretch relative justify-start gap-4">
+          {tabs?.map((tab) => (
+            <a
+              key={tab.href}
+              href={tab.href}
+              className={`flex items-center text-stone-900 text-sm font-semibold font-['Inter'] leading-tight transition-border duration-300 ease-in-out border-y-[3px] ${
+                path === tab.href
+                  ? "border-b-stone-900 border-t-transparent"
+                  : " border-transparent"
+              }`}
+            >
+              <span>{tab.label}</span>
+            </a>
+          ))}
+        </div>
+        <a className="self-center px-4 py-2 bg-black rounded-lg inline-flex flex-col items-end gap-2.5 overflow-hidden text-right justify-center text-white text-sm font-semibold font-['Inter'] leading-tight">
+          Get in touch
+        </a>
+      </div>
+      {menuOpen ? (
+        <div className="flex flex-col sm:hidden mt-2 gap-2 z-50 absolute top-[72px] left-0 right-0 bg-white shadow-lg">
+          {tabs?.map((tab) => (
+            <a
+              key={tab.href}
+              href={tab.href}
+              onClick={(_event) => setMenuOpen(false)}
+              className={`flex items-center text-stone-900 text-base font-semibold font-['Inter'] leading-tight px-2 py-2 rounded transition-colors duration-200 ${
+                path === tab.href ? "bg-stone-100" : ""
+              }`}
+            >
+              <span>{tab.label}</span>
+            </a>
+          ))}
+        </div>
+      ) : null}
+    </div>
   );
 }
 

@@ -9,21 +9,16 @@ import { editableAttributes } from "@storyblok/preview-bridge";
 
 function PageView(props: PageViewProps) {
   return (
-    <>
-      <div className="div-45b118fa" {...editableAttributes(props.content)}>
-        <AppBarView />
-        {props.content.body?.map((content, index) => (
-          <ContentView content={content} key={index} />
-        ))}
-        <FooterView />
-      </div>
-
-      <style>{`.div-45b118fa {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-}`}</style>
-    </>
+    <div
+      className="flex flex-col items-stretch"
+      {...editableAttributes(props.content)}
+    >
+      <AppBarView />
+      {props.content.body?.map((content, index) => (
+        <ContentView content={content} key={index} />
+      ))}
+      <FooterView />
+    </div>
   );
 }
 

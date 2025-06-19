@@ -1,7 +1,8 @@
 import { object, array, equals, oneOf, type Parser, withDefault, parseString, optional, parseNumber, map } from 'pure-parse';
-import type { CardsContent, Content, HeroContent, PageContent, TestimonialContent, TestimonialsContent, UnknownContent, TabsContent, TabContent, CardContent } from '.';
+import type { CardsContent, Content, HeroContent, PageContent, TestimonialContent, TestimonialsContent, UnknownContent, TabsContent, TabContent, CardContent, TeamMemberContent, TeamMembersContent, BackgroundColor } from '.';
 import { type AssetContent, type RichTextContent, type BlockContent } from '../delivery-api';
 import { parseRichTextContent } from './parseRichText';
+const parseBackgroundColor = withDefault<BackgroundColor>(oneOf(equals('white'), equals('grey'), equals('beige'), equals('purple'), equals('orange'), equals('yellow'), equals('green'), equals('pink'), equals('blue')), 'white');
 const parseAssetContent = object<AssetContent>({
   fieldtype: equals('asset'),
   id: parseNumber,
@@ -37,7 +38,9 @@ export const parseTestimonialContent = object<TestimonialContent>({
   _editable: optional(parseString),
   quote: parseString,
   name: parseString,
-  title: parseString
+  title: parseString,
+  image: withDefault(parseAssetContent, undefined),
+  imageBackgroundColor: parseBackgroundColor
 });
 export const parseTestimonialsContent = object<TestimonialsContent>({
   component: equals('testimonials'),
@@ -72,7 +75,7 @@ export const parseHeroContent = object<HeroContent>({
     type: 'doc',
     content: []
   } as RichTextContent),
-  backgroundColor: withDefault(oneOf(equals('white'), equals('grey'), equals('beige')), 'white')
+  backgroundColor: parseBackgroundColor
 });
 export const parseTabContent = object<TabContent>({
   component: equals('tab'),
@@ -91,6 +94,25 @@ export const parseTabsContent = object<TabsContent>({
     content: []
   } as RichTextContent)
 });
+export const parseTeamMemberContent = object<TeamMemberContent>({
+  component: equals('teamMember'),
+  _uid: parseString,
+  _editable: optional(parseString),
+  name: parseString,
+  title: parseString,
+  image: withDefault(parseAssetContent, undefined),
+  backgroundColor: parseBackgroundColor
+});
+export const parseTeamMembersContent = object<TeamMembersContent>({
+  component: equals('teamMembers'),
+  _uid: parseString,
+  _editable: optional(parseString),
+  description: parseRichTextContent,
+  teamMembers: withDefault(array(object({
+    uuid: parseString,
+    content: parseTeamMemberContent
+  })), [])
+});
 
 /**
  * @param data
@@ -98,5 +120,5 @@ export const parseTabsContent = object<TabsContent>({
 export function parseContent(data: unknown): ReturnType<Parser<Content>> {
   // This needs to be a function expression to avoid the following error:
   // TS2448: Block-scoped variable parseContent used before its declaration.
-  return oneOf(parsePageContent, parseTestimonialsContent, parseTestimonialContent, parseCardsContent, parseHeroContent, parseTabsContent)(data);
+  return oneOf(parsePageContent, parseTestimonialsContent, parseTestimonialContent, parseCardsContent, parseHeroContent, parseTabsContent, parseTeamMembersContent)(data);
 }

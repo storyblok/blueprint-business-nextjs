@@ -1,4 +1,4 @@
-import type { AssetContent, BlockContent, RichTextContent, TextAreaContent, TextContent } from '../delivery-api';
+import type { AssetContent, BlockContent, RichTextContent, Story, TextAreaContent, TextContent } from '../delivery-api';
 
 /**
  * When the parsing of a component fails, fall back fack to this component.
@@ -13,11 +13,14 @@ export type PageContent = BlockContent<{
   component: 'page';
   body: Content[];
 }>;
+export type BackgroundColor = 'beige' | 'white' | 'grey' | 'purple' | 'orange' | 'yellow' | 'green' | 'pink' | 'blue';
 export type TestimonialContent = BlockContent<{
   component: 'testimonial';
   quote: TextAreaContent;
+  image?: AssetContent;
   name: TextContent;
   title: TextContent;
+  imageBackgroundColor: BackgroundColor;
 }>;
 export type TestimonialsContent = BlockContent<{
   component: 'testimonials';
@@ -41,7 +44,7 @@ export type HeroContent = BlockContent<{
   imagePadding: boolean;
   textAlignment: 'left' | 'right' | 'center';
   description: RichTextContent;
-  backgroundColor: 'beige' | 'white' | 'grey';
+  backgroundColor: BackgroundColor;
 }>;
 export type TabsContent = BlockContent<{
   component: 'tabs';
@@ -53,4 +56,18 @@ export type TabContent = BlockContent<{
   title: TextContent;
   content: Content[];
 }>;
-export type Content = UnknownContent | PageContent | TestimonialContent | TestimonialsContent | CardsContent | HeroContent | TabsContent | TabContent
+export type TeamMemberContent = BlockContent<{
+  component: 'teamMember';
+  name: TextContent;
+  title: TextContent;
+  image?: AssetContent;
+  backgroundColor: BackgroundColor;
+}>;
+export type TeamMembersContent = BlockContent<{
+  component: 'teamMembers';
+  description: RichTextContent;
+  teamMembers: (Story & {
+    content: TeamMemberContent;
+  })[];
+}>;
+export type Content = UnknownContent | PageContent | TestimonialContent | TestimonialsContent | CardsContent | HeroContent | TabsContent | TabContent | TeamMembersContent
