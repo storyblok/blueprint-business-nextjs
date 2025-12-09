@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@netlify/plugin-nextjs": "*",
-    "next": "15.2.4",
+    "next": "15.2.6",
     "pure-parse": "1.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
